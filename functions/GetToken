@@ -1,17 +1,16 @@
 import requests
-import json
 import base64
 
-#Function passes through your MIDAS username and password as strings and returns the JWT token as a string
-
-def GetToken(username, password):
-    credentials = username + ":" + password
+def GetToken(username: str, password: str) -> str:
+    """Passes through MIDAS username and password and returns the JWT token."""
+    credentials = f"{username}:{password}"
     credentials_encodedBytes = base64.b64encode(credentials.encode("utf-8"))
-   
-    headers = {b'Authorization': b'BASIC ' + credentials_encodedBytes}
+    
+    headers = {'Authorization': b'BASIC ' + credentials_encodedBytes}
     url = 'https://midasapi.energy.ca.gov/api/token'
 
-    response = requests.get(url,headers=headers)
-    print(response.text)
-
+    response = requests.get(url, headers=headers)
+    response.raise_for_status() # Raise HTTPError for bad responses
+    
+    # Assuming token is in the headers, as per your original script
     return response.headers['Token']

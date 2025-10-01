@@ -1,11 +1,13 @@
-import requests
 import json
+import requests
+from typing import Dict, List, Optional, Any
 
-#Query passes in JWT access token as "token", Rate Identification Number (RIN) as rateID formatted as a string, and "alldata" or "realtime" for queryType formatted as a string
 
-def GetValue(token, rateID, queryType):
+def GetValue(token: str, rateID: str, queryType: str) -> Dict[str, Any]:
+    """Retrieves time series data for a specific rateID."""
     headers = {'accept': 'application/json', 'Authorization': "Bearer " + token}
-    url = 'https://midasapi.energy.ca.gov/api/valuedata?id=' + rateID + '&querytype=' + queryType
+    url = f'https://midasapi.energy.ca.gov/api/valuedata?id={rateID}&querytype={queryType}'
     pricing_response = requests.get(url, headers=headers)
-
-    return (json.loads(pricing_response.text))
+    pricing_response.raise_for_status()
+    
+    return json.loads(pricing_response.text)
