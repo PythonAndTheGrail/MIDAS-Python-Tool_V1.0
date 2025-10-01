@@ -2,7 +2,4 @@
 .ipynb_checkpoints
 
 *.yaml
-MIDAS-PYTHON-TOOL_V1.0/midas_config.yaml
-
-*.ipynb
-MIDAS-PYTHON-TOOL_V1.0/registration-midas.ipynb
+midas_config.yaml
